@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: httpbin
+  annotations:
+    ingress.alb.yc.io/subnets: e2lj3cbk50i7ojks1vjh
+    ingress.alb.yc.io/external-ipv4-address: 89.169.170.120
+    ingress.alb.yc.io/group-name: infra-ingress
+    ingress.alb.yc.io/security-groups: enpbup437ac7a5eiqo4t
+spec:
+  tls:
+    - hosts:
+        - "httpbin.infra.vadim-website.ru"
+      secretName: yc-certmgr-cert-id-fpq7kg6qddfblit7e3ke
+  rules:
+    - host: httpbin.infra.vadim-website.ru
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: httpbin
+                port:
+                  number: 80
+

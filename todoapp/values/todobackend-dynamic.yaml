@@ -1,0 +1,32 @@
+image:
+    repository: cr.yandex/crpmb3eb0s24s0nc0nhh/kube/todobackend
+ingress:
+    enabled: true
+    annotations:
+        ingress.alb.yc.io/subnets: e2lj3cbk50i7ojks1vjh
+        ingress.alb.yc.io/external-ipv4-address: 51.250.18.65
+        ingress.alb.yc.io/group-name: dev-ingress
+        ingress.alb.yc.io/security-groups: e2lj3cbk50i7ojks1vjh
+        argocd-image-updater.argoproj.io/image-list: front=cr.yandex/crpmb3eb0s24s0nc0nhh/kube/todobackend
+        argocd-image-updater.argoproj.io/front.update-strategy: latest
+service:
+    type: NodePort
+    # свободный порт на ваш выбор
+    nodePort: 30085
+migrations:
+    activeDeadlineSeconds: 300
+    command:
+        - python
+        - manage.py
+        - migrate
+db:
+    enabled: true
+    clusterId: catv0bprart3dmu7ijkg
+    dbName: todolist_test
+    dbOwner: todolist_test_user
+    username: todolist_test_user
+    password: todolist_test_password
+    connLimit: 10
+    grants:
+        - mdb_admin
+        - mdb_replication

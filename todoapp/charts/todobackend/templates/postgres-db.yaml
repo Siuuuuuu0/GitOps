@@ -1,0 +1,14 @@
+{{- if db.enabled }}
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlDatabase
+metadata:
+  name: {{ .Values.db.dbName | replace "_" "-" }}
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "1"
+spec:
+  forProvider:
+    clusterId: {{ .Values.db.clusterId }}
+    name: {{ .Values.db.dbName }}
+    owner: {{ .Values.db.username }}
+{{- end }}

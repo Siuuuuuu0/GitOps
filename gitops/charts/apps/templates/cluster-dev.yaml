@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: infrastructure
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    # переиспользуем чарт
+    path: charts/k8s-cluster
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valueFiles:
+        # указываем путь до values файла
+        - ../../values/cluster-dev.yaml
+  syncPolicy:
+    automated: {}

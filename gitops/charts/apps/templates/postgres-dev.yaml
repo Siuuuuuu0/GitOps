@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: infrastructure
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    # Указываем путь до чарта
+    path: charts/postgres
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valueFiles:
+        # Указываем путь до values-файла
+        - secrets+age-import:///helm-secrets-private-keys/key.txt?../../values/postgres-dev.yaml
+  syncPolicy:
+    automated: {}

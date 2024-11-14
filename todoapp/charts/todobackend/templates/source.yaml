@@ -1,0 +1,51 @@
+# {{- if .Values.dataTransfer.enabled }}
+# apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+# kind: Endpoint
+# metadata:
+#   name: {{ include "todobackend.fullname" . }}-datatransfer-source
+#   annotations:
+#     helm.sh/hook: pre-install
+#     helm.sh/hook-weight: "5"
+# spec:
+#   forProvider:
+#     folderId: {{ .Values.dataTransfer.folderId }}
+#     name: {{ include "todobackend.fullname" . }}-datatransfer-source
+#     settings:
+#       postgresSource:
+#         database: {{ .Values.dataTransfer.source.dbName }}
+#         password:
+#           rawSecretRef:
+#             name: {{ .Values.dataTransfer.source.secretName }}
+#             namespace: {{ .Values.dataTransfer.source.secretNamespace }}
+#             key: password
+#         user: {{ .Values.dataTransfer.source.username }}
+#         connection:
+#           mdbClusterId: {{ .Values.dataTransfer.source.clusterId }}
+# {{- end }}
+apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Endpoint
+metadata:
+  name: "prod-source"
+  # name: postgres-prod
+spec:
+  forProvider:
+    folderId: "b1giktpatd88fk2a7bss"
+    name: "prod-source"
+    settings:
+      - postgresSource:
+        - database: "todolist_prod"
+          password:
+            - rawSecretRef:
+                name: "postgres-prod-creds"
+                namespace: "default"
+                key: "password"
+          user: "todolist_prod_user"
+          connection:
+          - mdbClusterId: "c9qdts1t3c8pdth0fctg"
+            # excludeTables: []
+            # includeTables: []
+          excludeTables: []
+          includeTables: []
+  providerConfigRef:
+    name: default
+

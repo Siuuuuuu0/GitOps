@@ -1,0 +1,19 @@
+apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Endpoint
+metadata:
+  name: dynamic-target
+spec:
+  forProvider:
+    name: dynamic-target
+    folderId: b1giktpatd88fk2a7bss
+    settings:
+      - postgresTarget:
+        - database: test-db
+          password:
+            - rawSecretRef:
+                name: pass-test-user
+                namespace: infrastructure
+                key: password
+          user: test-user
+          connection:
+          - mdbClusterId: c9qic6kd6tevkeoeg1bb

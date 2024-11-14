@@ -1,0 +1,20 @@
+{{- if db.enabled }}
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlUser
+metadata:
+  name: {{ .Values.db.username | replace "_" "-" }}
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "1"
+spec:
+  forProvider:
+    clusterId: {{ .Values.db.clusterId }}
+    name: {{ .Values.db.username }}
+    connLimit: {{ .Values.db.connLimit }}
+    passwordSecretRef:
+      name: pass-{{ .Values.db.username }}
+      namespace: {{ .Release.Namespace }}
+      key: password
+    grants:
+      {{- toYaml .Values.db.grants | nindent 6 }}
+{{- end }}

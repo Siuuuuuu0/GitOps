@@ -1,0 +1,6 @@
+subnetId: e2lj3cbk50i7ojks1vjh
+certificateId: fpqqls9j4050ahnm1smu
+ingressIp: 51.250.18.65
+ingressGroup: apps-ingress
+ingressHost: httpbin.apps.vadim-website.ru
+securityGroup: enpac1l8i2firm6864e1

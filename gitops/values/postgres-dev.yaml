@@ -1,0 +1,29 @@
+#ENC[AES256_GCM,data:lZhDlkRhubn40XwCtQFckXvGqTs1+nCwJRS7nxKgU8JlrsKmtFsq8VfOfourEbJ4Oze8XVeWf/Gr5JUBZh3raesJRXRKXJ96mMwericVXDl5zTAcGO6lxe1GGcJdXbScC4E8qRFLJVQOVzG3nN7u8zA4POOWIrql4ki9,iv:87wR+Oxi+d2vck5hgRDdurkw7poJrF+ZSJ/NyjzOInA=,tag:mY9u7yyGJQZlNvVcPgcn8A==,type:comment]
+postgresName: ENC[AES256_GCM,data:kwI9,iv:n37AepmM94/5NwxSjb9uuFFrsQiS6gjjuzXxi+cqJgE=,tag:2SLITv+wDbcfhXyXp55WfQ==,type:str]
+#ENC[AES256_GCM,data:sOaNJcV2leTvTK5HCzCaRjcnoHzNpETu8muwJRdTNp7ejSZUq4JGnebhUIloMzMc7OlTCuXdggZr,iv:rvh3Q0ecRKSNuquPC8FL5HrKw2HOlUaS1HS5ednuNhc=,tag:/bgV/5mvAkKMUTUGItTTdg==,type:comment]
+dbUser: ""
+dbPassword: ""
+dbName: ""
+securityGroupNames:
+    - ENC[AES256_GCM,data:gszW6L5HAANAasZTgxqq+80I,iv:IPpJH4z8c/e/VC6nIM+GaHKeSNwXpsMi9DrQkTTJlt4=,tag:h0yiwmU09XhJCwLCfi6K2Q==,type:str]
+    - ENC[AES256_GCM,data:Xqrx4qp0YqruA6Go9zOW2ss=,iv:UyFvhecQg1eZ4zso29lRC9T9vJ++y2y1A1qE6y8xBco=,tag:v2mF2BEXaCFQGRsblNaUSw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1x9rnj5u4w2g0l0u2tj50c2ztp6wdep2ekxu4vplm644ap8zmvfdsp75t90
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAyM2R4U0kyT3JHaldmaVc5
+            cmQ5dExqcmY0Qm1LczBVZmVjeTQ0emFWU3pnCmgwaTZ5OUEvdzFUNEJFSWNRSkQv
+            Q1lGWXgvZ0ZOK2ZXSGpBenVGRXlWVzgKLS0tIHE2TGJrem5BdnZNTmtJdHpmOW9Q
+            NU9UaUVocTVnR1NZWTVmemRjV0RqZTAKZCAbIc6RXql4k2F07newybs5yA1s5XDa
+            YvZL2kN8OacclPWbCxOMZSvui4ZHG86nklYbOE8+t+BNDlCBFWtMOA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-09-07T12:12:11Z"
+    mac: ENC[AES256_GCM,data:+Xgm9iejK0AHF6UvCrMye0cglP+k9gCfPqDQbtkgJSNl8gFIsBmGsjfov2JWLDsfRipARnjs1OcOqjp7asDICsfQ/1168CrFxA9kUixjMHJda9XfdTAN6V7s2iAoGDAhGSCq2mQTu4c9JTAkALaIq6S7IYl5wrerg90guG1NRJs=,iv:LeA7W8Kfx5bNUaGwglbmGQzWEMbUdGMsv+1fMDWR1lk=,tag:8vr8d49RjVEocd+TFu/1eg==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.0

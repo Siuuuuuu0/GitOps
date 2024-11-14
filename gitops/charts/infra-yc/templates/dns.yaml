@@ -1,0 +1,59 @@
+kind: Recordset
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: apps
+spec:
+  deletionPolicy: Orphan  # не забывайте проставлять deletionPolicy
+  forProvider:
+    data:
+      - "51.250.18.65"
+    name: "*.apps.vadim-website.ru."
+    ttl: 600
+    type: A
+    zoneIdRef:
+      name: apps-dns
+---
+kind: Recordset
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: apps-cert-challenge
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    data:
+      - "fpqqls9j4050ahnm1smu.cm.yandexcloud.net."
+    name: "_acme-challenge.apps.vadim-website.ru."
+    ttl: 600
+    type: CNAME
+    zoneIdRef:
+      name: apps-dns
+---
+kind: Recordset
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: stage-env
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    data:
+      - "51.250.18.65"
+    name: "*.apps-stage.vadim-website.ru."
+    ttl: 600
+    type: A
+    zoneIdRef:
+      name: yc-courses 
+---
+kind: Recordset
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: stage-cert-challenge
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    data:
+      - "fpqpcgg38hqd9cs1ajr1.cm.yandexcloud.net."
+    name: "_acme-challenge.apps-stage.vadim-website.ru."
+    ttl: 600
+    type: CNAME
+    zoneIdRef:
+      name: yc-courses

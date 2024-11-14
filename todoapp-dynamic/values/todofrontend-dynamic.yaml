@@ -1,0 +1,15 @@
+image:
+    repository: cr.yandex/crpmb3eb0s24s0nc0nhh/kube/frontend
+imagePullSecrets:
+    - name: todoapp-dynamic
+#secret created via kubectl cli
+ingress:
+    enabled: true
+    annotations:
+        ingress.alb.yc.io/subnets: e2lj3cbk50i7ojks1vjh
+        ingress.alb.yc.io/external-ipv4-address: 51.250.18.65
+        ingress.alb.yc.io/group-name: prod
+        ingress.alb.yc.io/security-groups: enp6ve6t8bebkuk4m28g
+service:
+    type: NodePort
+    nodePort: 30081

@@ -1,0 +1,13 @@
+apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Transfer
+metadata:
+  name: transfer
+spec:
+  forProvider:
+    name: transfer
+    sourceIdRef:
+      name: prod-source
+    targetIdRef:
+      name: dynamic-target
+    type: "SNAPSHOT_ONLY"
+    folderId: b1giktpatd88fk2a7bss

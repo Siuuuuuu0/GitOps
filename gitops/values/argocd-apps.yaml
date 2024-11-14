@@ -1,0 +1,75 @@
+applications:
+  apps:
+    namespace: argocd
+    project: default
+    source:
+      # Указываем путь к values, обратите внимание на то, что он относительный
+      helm:
+        valueFiles:
+          - ../../values/apps.yaml
+      # Путь до чарта
+      path: charts/apps
+      # Репозиторий
+      repoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/kube-project.git
+    destination:
+      # Устанавливаем все приложения в тот же неймспейс argocd
+      namespace: argocd
+      server: https://kubernetes.default.svc
+    syncPolicy:
+      automated: { }
+  apps-prod: 
+    namespace: argocd
+    project: default
+    source:
+      helm:
+        # указываем путь к параметрам
+        valueFiles:
+          - ../../values/apps-prod.yaml
+      # не забываем поменять чарт на apps-prod
+      path: charts/apps-prod
+      repoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/kube-project.git
+    destination:
+      namespace: argocd
+      # обратите внимание, что само приложение 
+      # будет развернуто в нашем инфра-кластере, а не продакшн
+      server: https://kubernetes.default.svc
+    syncPolicy:
+      automated: { }
+  apps-dev:
+    namespace: argocd
+    project: default
+    source:
+      helm:
+          valueFiles:
+              - ../../values/apps-dev.yaml
+      path: charts/apps-dev
+      repoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/kube-project.git
+    destination:
+      namespace: argocd
+      server: https://kubernetes.default.svc
+    syncPolicy:
+      automated: {} 
+projects:
+  todoapp:
+    namespace: argocd
+    sourceRepos:
+      - https://kube-vadim.gitlab.yandexcloud.net/kube/todoapp.git
+    # Это настройки проекта, куда можно раскладывать приложения
+    # Кластер yc-kube-dev мы создадим чуть позже
+    destinations:
+      - name: yc-kube-prod
+        namespace: todobackend
+        server: https://84.201.163.120
+      - name: yc-kube-prod
+        namespace: todofrontend
+        server: https://84.201.163.120
+      - name: yc-kube-dev
+        namespace: todobackend-*
+      - name: yc-kube-dev
+        namespace: todofrontend-*
+    # Разрешаем автоматически создавать неймспейсы
+    clusterResourceWhitelist:
+      - group: ""
+        kind: Namespace
+      - group: mdb.yandex-cloud.jet.crossplane.io
+        kind: '*' 

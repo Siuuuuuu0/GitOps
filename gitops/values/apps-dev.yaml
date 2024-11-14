@@ -1,0 +1,8 @@
+spec:
+  source:
+    repoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/kube-project.git
+    targetRevision: HEAD
+    appsRepoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/todoapp.git
+    appsTargetRevision: HEAD
+  destination:
+    server: https://51.250.99.120

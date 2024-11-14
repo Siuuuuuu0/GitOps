@@ -1,0 +1,223 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: todoapp-dynamic
+#   namespace: argocd
+# spec:
+#   generators:
+#     - scmProvider:
+#         cloneProtocol: https
+#         filters:
+#           - branchMatch: ^feature
+#             repositoryMatch: ^todobackend
+#         gitlab:
+#           allBranches: true
+#           api: "https://kube-vadim.gitlab.yandexcloud.net/"
+#           group: yc-courses
+#           includeSubgroups: true
+#            
+#   template:
+#     metadata:
+#       name: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#     spec:
+#       destination:
+#         namespace: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#         name: {{ .Values.spec.destination.name }}
+#       project: todoapp
+#       source:
+#         path: charts/todobackend
+#         repoURL: "https://kube-vadim.gitlab.yandexcloud.net/kube/todoapp.git"
+#         targetRevision: {{ .Values.spec.source.targetRevision }}
+#         helm:
+#           valueFiles:
+#             - secrets+age-import:///helm-secrets-private-keys-apps/key.txt?../../values/todobackend-dynamic.yaml
+#           parameters:
+#             - name: "image.tag"
+#               value: "{{`{{ branch }}`}}-{{`{{ sha }}`}}"
+#           # Параметры для настройки ingress
+#             - name: "ingress.hosts[0].host"
+#               value: "{{`{{ branch }}`}}.apps-stage.vadim-website.ru"
+#             - name: "ingress.hosts[0].paths[0].path"
+#               value: "/api"
+#             - name: "ingress.hosts[0].paths[0].pathType"
+#               value: "ImplementationSpecific"
+#             - name: "ingress.tls[0].hosts[0]"
+#               value: "{{`{{ branch }}`}}.apps-stage.vadim-website.ru"
+#             - name: "ingress.tls[0].secretName"
+#               value: "yc-certmgr-cert-id-fpqpcgg38hqd9cs1ajr1"
+#           # А тут параметры для подключения к базе данных
+#             - name: "env[0].name"
+#               value: "DB_PG_NAME"
+#             - name: "env[0].value"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "env[1].name"
+#               value: "DB_PG_USER"
+#             - name: "env[1].value"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "env[2].name"
+#               value: "DB_PG_PASSWORD"
+#             # - name: "env[2].valueFrom.secretKeyRef.name"
+#             #   value: "pass-postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "DB_PG_PASSWORD"
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: "pass-postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#                   key: "password"
+#             - name: "env[2].valueFrom.secretKeyRef.key"
+#               value: "password"
+#             - name: "env[3].name"
+#               value: "DB_PG_HOST"
+#             - name: "env[3].value"
+#               value: "c-c9qic6kd6tevkeoeg1bb.rw.mdb.yandexcloud.net"
+#             - name: "env[4].name"
+#               value: "DB_PG_PORT"
+#             - name: "env[4].value"
+#               value: "6432"
+#           # Параметр forceString позволяет форсировать передачу значения как string, а не int
+#               forceString: true
+#           # И параметры для манифестов самой БД. Параметры db.password, db.connLimit и db.grants укажем в зашифрованном values-файле
+#             - name: "db.clusterId"
+#               value: "c9qic6kd6tevkeoeg1bb"
+#             - name: "db.dbName"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "db.dbOwner"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "db.username"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#           # Параметры DataTransfer
+#             - name: "dataTransfer.enabled"
+#               value: true
+#             - name: "dataTransfer.folderId"
+#               value: "b1giktpatd88fk2a7bss"
+#             - name: "dataTransfer.transferType"
+#               value: "SNAPSHOT_ONLY"
+#             - name: "dataTransfer.source.dbName"
+#               value: "reference-db"
+#             - name: "dataTransfer.source.username"
+#               value: "reference-db"
+#             - name: "dataTransfer.source.secretName"
+#               value: "todolist-user-reference-db"
+#             - name: "dataTransfer.source.secretNamespace"
+#               value: "infrastructure"
+#             - name: "dataTransfer.source.clusterId"
+#               value: "c9qdts1t3c8pdth0fctg"
+#             - name: "dataTransfer.target.dbName"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "dataTransfer.target.username"
+#               value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "dataTransfer.source.secretName"
+#               value: "pass-postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "dataTransfer.source.secretNamespace"
+#               value: "<{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+#             - name: "dataTransfer.source.clusterId"
+#         syncPolicy:
+#           automated: {}
+#           syncOptions:
+#             - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: todoapp-dynamic
+  namespace: argocd
+spec:
+  generators:
+    - scmProvider:
+        cloneProtocol: https
+        filters:
+          - branchMatch: ^feature
+            repositoryMatch: ^todobackend
+        gitlab:
+          allBranches: true
+          api: "https://kube-vadim.gitlab.yandexcloud.net/"
+          group: yc-courses
+          includeSubgroups: true
+          tokenRef:
+            key: token
+            secretName: my-gitlab-token-secret
+  template:
+    metadata:
+      name: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+    spec:
+      destination:
+        namespace: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+        name: {{ .Values.spec.destination.name }}
+      project: todoapp
+      source:
+        path: charts/todobackend
+        repoURL: "https://kube-vadim.gitlab.yandexcloud.net/kube/todoapp.git"
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valueFiles:
+            - secrets+age-import:///helm-secrets-private-keys-apps/key.txt?../../values/todobackend-dynamic.yaml
+          parameters:
+            - name: "image.tag"
+              value: "{{`{{ branch }}`}}-{{`{{ sha }}`}}"
+            - name: "ingress.hosts[0].host"
+              value: "{{`{{ branch }}`}}.apps-stage.vadim-website.ru"
+            - name: "ingress.hosts[0].paths[0].path"
+              value: "/api"
+            - name: "ingress.hosts[0].paths[0].pathType"
+              value: "ImplementationSpecific"
+            - name: "ingress.tls[0].hosts[0]"
+              value: "{{`{{ branch }}`}}.apps-stage.vadim-website.ru"
+            - name: "ingress.tls[0].secretName"
+              value: "yc-certmgr-cert-id-fpqpcgg38hqd9cs1ajr1"
+            - name: "env[0].name"
+              value: "DB_PG_NAME"
+            - name: "env[0].value"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "env[1].name"
+              value: "DB_PG_USER"
+            - name: "env[1].value"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "DB_PG_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "pass-postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+                  key: "password"
+            - name: "env[3].name"
+              value: "DB_PG_HOST"
+            - name: "env[3].value"
+              value: "c-c9qic6kd6tevkeoeg1bb.rw.mdb.yandexcloud.net"
+            - name: "env[4].name"
+              value: "DB_PG_PORT"
+            - name: "env[4].value"
+              value: "6432"
+              forceString: true
+            - name: "db.clusterId"
+              value: "c9qic6kd6tevkeoeg1bb"
+            - name: "db.dbName"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "db.dbOwner"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "db.username"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "dataTransfer.enabled"
+              value: "true"
+              forceString: true
+            - name: "dataTransfer.folderId"
+              value: "b1giktpatd88fk2a7bss"
+            - name: "dataTransfer.transferType"
+              value: "SNAPSHOT_ONLY"
+            - name: "dataTransfer.source.dbName"
+              value: "reference-db"
+            - name: "dataTransfer.source.username"
+              value: "reference-db"
+            - name: "dataTransfer.source.secretName"
+              value: "todolist-user-reference-db"
+            - name: "dataTransfer.source.secretNamespace"
+              value: "infrastructure"
+            - name: "dataTransfer.source.clusterId"
+              value: "c9qdts1t3c8pdth0fctg"
+            - name: "dataTransfer.target.dbName"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "dataTransfer.target.username"
+              value: "postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "dataTransfer.target.secretName"
+              value: "pass-postgres-{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+            - name: "dataTransfer.target.secretNamespace"
+              value: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+        syncPolicy:
+          automated: {}
+          syncOptions:
+            - CreateNamespace=true

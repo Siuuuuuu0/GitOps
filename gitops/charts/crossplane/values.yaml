@@ -1,0 +1,77 @@
+affinity: {}
+args: {}
+configuration:
+  packages: []
+customLabels: {}
+deploymentStrategy: RollingUpdate
+extraEnvVarsCrossplane: {}
+extraEnvVarsRBACManager: {}
+image:
+  pullPolicy: IfNotPresent
+  repository: cr.yandex/yc-marketplace/crossplane-mirror/crossplane
+  tag: v1.6.3
+imagePullSecrets:
+- dockerhub
+leaderElection: true
+metrics:
+  enabled: false
+nodeSelector: {}
+packageCache:
+  medium: ""
+  pvc: ""
+  sizeLimit: 5Mi
+podSecurityContextCrossplane: {}
+podSecurityContextRBACManager: {}
+priorityClassName: ""
+provider:
+  packages:
+  - cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.19
+providerJetYC:
+  creds: |
+      {
+          "id": "ajep7vpupkomlomeqcn5",
+          "service_account_id": "aje207riguutk9nninoj",
+          "created_at": "2024-08-30T12:26:13.112688699Z",
+          "key_algorithm": "RSA_2048",
+          "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlNL7cWkInOlwfm+iupww\nEGhYGtnjrZV2AjuDlurErzpx3rQpM8rFWNxsZNWxU0TLP/p5jQF5qNa3Bwtflb3s\nWvYkIwZAeU6L9gCe7sxy7Uh9Dz85+gx306pRv7anxli8yeB24/3/qZ5Sp6gVGR2M\nMIbFwe182xS4jm4WDGTaBKNU3ZChGJW4+dRldATsi7zkydYeaqKqujjlnZblSgVb\nu6RktNmC4hL757M4a2qCyks6PYfTyav8Ak9emzthxvIdbmv4Ru/DuT/Ihff+Z/Ce\nCa5HiuWhRqZAEcvHh0EV/sqmesUFkht+NNa8+3gffhuxdCSFFYVeV9ArDqRVCJ2m\nUQIDAQAB\n-----END PUBLIC KEY-----\n",
+          "private_key": "PLEASE DO NOT REMOVE THIS LINE! Yandex.Cloud SA Key ID \u003cajep7vpupkomlomeqcn5\u003e\n-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCU0vtxaQic6XB+\nb6K6nDAQaFga2eOtlXYCO4OW6sSvOnHetCkzysVY3Gxk1bFTRMs/+nmNAXmo1rcH\nC1+Vvexa9iQjBkB5Tov2AJ7uzHLtSH0PPzn6DHfTqlG/tqfGWLzJ4Hbj/f+pnlKn\nqBUZHYwwhsXB7XzbFLiObhYMZNoEo1TdkKEYlbj51GV0BOyLvOTJ1h5qoqq6OOWd\nluVKBVu7pGS02YLiEvvnszhraoLKSzo9h9PJq/wCT16bO2HG8h1ua/hG78O5P8iF\n9/5n8J4JrkeK5aFGpkARy8eHQRX+yqZ6xQWSG3401rz7eB9+G7F0JIUVhV5X0CsO\npFUInaZRAgMBAAECggEABDbZgI2TrSxR1326KSBAPu2yfX+pKiag5OkqJbNUEp10\nQST/Q/CAcD7NKbmQo/nPKtqRF7Zoi1i5rfcTK8iJFW4SCcUc/SZlkZe0yHC1Ci22\n32A4KEHTQJTai+QMahIkFfAfk78S/trNLsLUZp265Rqi5dX/lq1WeM+Km6sdLpuF\nnX0CyQm4AwyjvNPYiBHzyO7jZVXcRpFWE+YthIdLWPFhVTpt7OWCK6YMhpvVomqi\nb8XS8Oub6lmk3XxLmS4oFkOyvTeI8x9G9rCNMWS+RFzMLhtAkwLqndeRHDtBRM+k\ntgi+HLW+P509Ky1L2SVrTDxck/CI+UeUn3xTDhysoQKBgQDKBmFv7lNSkGZDTi8a\nMmFgrqbumvBwdWRI1L2EizDkNNMP1IECFygPC8QzPUuojdknwMDCbXWo9GnCdivo\nHmR2gX2mr8oGPoKS79QEq5ICLYwsSN6ctKnJfpEr0lw9Cear7VmMBdSExPKXn8dL\nYGgn4NGfPSntwmtdGfetDZGJ4QKBgQC8lebYZAgpw+jqo1qJGm5SihXfIDHhX4zw\nRxxyqI9+iahDdFd7V4thZqQ9FiMqCYG9mFbaxO5vRQg/XhZRWyGLPnOZUyv1jLWp\niKeBSG+E+Ollh1Y70u8FkjZQCYHdAhxi88gIblZX/f5VbSVGymxbXlBPqvDCijIL\nqxr0bZ0KcQKBgEi1oS3qxZxKkjOZGQTBqyBj23q20uB2r6AyyP7CJdeMV4Y0AjZh\nZS59GqEiZ2+DletjyTxwrs8fIE03wLeq8JdiJXnvfLNgnhgKLvF7WnJkODXcCBq4\nPv9hCRiPflkNjjLEmtz1YDZkt7bwb4bmbLYliOxZ1BRZS9DXPrfO0VmhAoGBAIm7\nzcrzXEbsr9tXDVOfOz4LXigFQokBGVWQCkXvuEXJ0lvZx97stH6h0YhP98THBrvr\nXFwRgrc/quNlG1W2AkzJgvJTnYKMj01P4k75EYIDrasaai/tQedGv2Y7W16IISVg\nORN3SpafijboLVaDlxowSuW0yny7JAwDnv8wY4bxAoGAE9Fn8lxMPHJkeH43vAhE\nFkaeVSFVfARd9XXNIP0zzkY8OodddekiYn3Bo7EjGEqx9pw92kne2DDpEW323YDA\ntyNnhb2o/N8yV2XY25rbHd/oHzEyt/dHAMEpMiEZIB0gv0yQV0iMBGaf4ytrPkaR\nCr0NMDaAhyZGcqBZpqTWSxQ=\n-----END PRIVATE KEY-----\n"
+      }
+rbacManager:
+  affinity: {}
+  args: {}
+  deploy: true
+  leaderElection: true
+  managementPolicy: All
+  nodeSelector: {}
+  replicas: 1
+  skipAggregatedClusterRoles: false
+  tolerations: {}
+registryCaBundleConfig: {}
+replicas: 1
+resourcesCrossplane:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+resourcesRBACManager:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+securityContextCrossplane:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsGroup: 65532
+  runAsUser: 65532
+securityContextRBACManager:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsGroup: 65532
+  runAsUser: 65532
+serviceAccount:
+  customAnnotations: {}
+tolerations: {}

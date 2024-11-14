@@ -1,0 +1,16 @@
+clusterName: "dev"
+clusterVersion: "1.27"
+clusterZone: "ru-central1-b"
+clusterIpv4Range: "10.114.0.0/16"
+serviceIpv4Range: "10.98.0.0/16"
+nodeCount: 1
+nodeDiskSize: 64
+nodeMem: 2
+nodeCores: 2
+securityGroup: dev-security-group
+nodeSubnet: default-ru-central1-b
+autoscaling:
+  enabled: true
+  initialSize: 1
+  minSize: 1
+  maxSize: 5

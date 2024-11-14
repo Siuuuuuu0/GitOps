@@ -1,0 +1,47 @@
+stages:
+  - build
+  - Vulnerability Scan
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  only:
+    - master
+    - main
+    - dev
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${YC_CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${YC_CI_REGISTRY_USER}" "${YC_CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --use-new-run
+      --snapshotMode=redo
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${YC_CI_REGISTRY}/${YC_CI_REGISTRY_ID}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
+
+Vulnerability Scan:
+  stage: Vulnerability Scan
+  image:
+    name: docker.io/aquasec/trivy:0.37.2
+    entrypoint: [""]
+  variables:
+    GIT_STRATEGY: none
+    TRIVY_USERNAME: "$YC_CI_REGISTRY_USER"
+    TRIVY_PASSWORD: "$YC_CI_REGISTRY_PASSWORD"
+    TRIVY_AUTH_URL: "$YC_CI_REGISTRY"
+    FULL_IMAGE_NAME: "${YC_CI_REGISTRY}/${YC_CI_REGISTRY_ID}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
+  script:
+    - trivy --version
+    - time trivy image --clear-cache
+    - time trivy image --download-db-only
+    - time trivy image --exit-code 0 --format template --template "@/contrib/gitlab.tpl"
+        --output "$CI_PROJECT_DIR/gl-container-scanning-report.json" "$FULL_IMAGE_NAME"
+    - time trivy image --exit-code 0 "$FULL_IMAGE_NAME"
+    - time trivy image --exit-code 1 --severity CRITICAL "$FULL_IMAGE_NAME"
+  artifacts:
+    when: always
+    paths:
+      - gl-container-scanning-report.json

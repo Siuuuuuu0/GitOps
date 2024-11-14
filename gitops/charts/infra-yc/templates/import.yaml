@@ -1,0 +1,107 @@
+# Первым делом импортируем каталог
+apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Folder
+metadata:
+  name: default
+  annotations:
+    crossplane.io/external-name: "b1giktpatd88fk2a7bss"
+spec:
+  # этот параметр для безопасности
+  # чтобы не удалить каталог при удалении ресурса из kubernetes
+  deletionPolicy: Orphan
+  forProvider:
+    # default – стандартное название каталога по умолчанию
+    # если ваш каталог называется по-другому – указываем это другое имя
+    name: default
+---
+# Следующим шагом импортируем сеть
+kind: Network
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: default
+  annotations:
+    crossplane.io/external-name: "enppkedojflvesk9rnce"
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    name: kubernetes
+    # обратите внимание, что id каталога уже указывать не надо
+    # достаточно использовать референс на другую сущность crossplane
+    folderIdRef:
+      name: default
+---
+# Импортируем подсеть default-ru-central1-b
+kind: Subnet
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: default-ru-central1-b
+  annotations:
+    crossplane.io/external-name: "e2lj3cbk50i7ojks1vjh"
+spec:
+  forProvider:
+    networkIdRef:
+      name: default
+    folderIdRef:
+      name: default
+    v4CidrBlocks:
+      - 10.129.0.0/24  # берем из yc vpc subnet get default-ru-central1-b
+---
+kind: Subnet
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: default-ru-central1-a
+  annotations:
+    crossplane.io/external-name: "e9b0jgt3lt8p727ip9db"
+spec:
+  forProvider:
+    networkIdRef:
+      name: default
+    folderIdRef:
+      name: default
+    v4CidrBlocks:
+      - 10.128.0.0/24
+---
+kind: Subnet
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: default-ru-central1-d
+  annotations:
+    crossplane.io/external-name: "fl8dh1u97uda2vjvbth4"
+spec:
+  forProvider:
+    networkIdRef:
+      name: default
+    folderIdRef:
+      name: default
+    v4CidrBlocks:
+      - 10.130.0.0/24
+---
+kind: Zone
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: yc-courses
+  annotations:
+    crossplane.io/external-name: "dns6ff2o6citv5pfgucl"
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    name: yc-courses
+    zone: "vadim-website.ru."
+    public: true
+    folderIdRef:
+      name: default 
+---
+kind: Zone
+apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+metadata:
+  name: apps-dns
+  annotations:
+    crossplane.io/external-name: "dnsfe8joppdgrt2s8oqi"
+spec:
+  deletionPolicy: Orphan
+  forProvider:
+    name: dnsfe8joppdgrt2s8oqi
+    zone: "apps.vadim-website.ru."
+    public: true
+    folderIdRef:
+      name: default 

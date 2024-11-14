@@ -1,0 +1,71 @@
+replicaCount: ENC[AES256_GCM,data:sA==,iv:rn59d1VBolzhO6adiK/BInvSMUh8MW1on6IMsTvIeP8=,tag:paXrodNv/THOhFG9ToEmxA==,type:int]
+image:
+    tag: ENC[AES256_GCM,data:k2Q4fWKbb6/aeFfuGR+oe9DYwodsGCfJmF2XBHGcQZS4oKqnUbW0hA==,iv:tGS2A3kSOVmjUhFeMggNoQkqjUTMw8FXxKcDLYl+mYI=,tag:IIFB+N4H4bJATOB3npXUmA==,type:str]
+    repository: ENC[AES256_GCM,data:Z2ED1zFuDRACvnRY/0mLl6L3EnSC+XeK+2teUho553S/yWzSWGNVwk/OMMA=,iv:UYjsYo48lNOQ22XzlgEps7A3VTdYc6yKQvRffqL9GQk=,tag:5NkuAv55jPv7wKwzl/F4xA==,type:str]
+imagePullSecrets:
+    - name: ENC[AES256_GCM,data:naSBvqqnYQ==,iv:2emqX8OGIJ/Uc48gxy/EDMeYXxZy+Wi4mPn4D0gfs4I=,tag:KTg0IPJWiN51HV4Mwv7bTA==,type:str]
+ingress:
+    #ENC[AES256_GCM,data:eR3HIkRa5bpxKwf8/K5NM9VdFnDB5u2T+w==,iv:+6XrIeK6Nv4ErWhHRXqpX/3M1Z2ST8spC4gfQhgRyIQ=,tag:JQKQcjFiJeHHiEaXLKYTSg==,type:comment]
+    enabled: ENC[AES256_GCM,data:Ni+nOA==,iv:GADzTqXC6uDG6Wr4coGnUuBiNCpFhbao6mK1k3YI9QE=,tag:sO7TEnYNuLEgSDA8xgcQWA==,type:bool]
+    annotations:
+        ingress.alb.yc.io/subnets: ENC[AES256_GCM,data:4f+vdR8biJgv8cFrwSUNHBx03NE=,iv:/mKOpMeGFRS4dz+SQlOVTXgaKbCDacHn/oWqQAe+Dqc=,tag:/FR/ZCAg6JkZxhUsYwgiyg==,type:str]
+        ingress.alb.yc.io/external-ipv4-address: ENC[AES256_GCM,data:djo+Ksd5AdnnmiMH,iv:dKMFCpVQPs6+gpNyJhi4EcHTKkbDmgJ2h2jWGddhTBI=,tag:ZQ4cC9SRKVk2ZYgKnz/cEA==,type:str]
+        ingress.alb.yc.io/group-name: ENC[AES256_GCM,data:gnKMN98Scz9pmdCs,iv:Of9cMxV0NUm4vkGs6BO7qISRfvg9iAK9e4h94CnVTUE=,tag:wTqil5+mex/WPaeWUfNmaQ==,type:str]
+        ingress.alb.yc.io/security-groups: ENC[AES256_GCM,data:tP8KXRomx16+ug06fBpm26/4W+w=,iv:Gf1kXZ+/22Kg3hFHl0YKV387aLnApWK0AsojKq2CU9A=,tag:HWAsKrcK+rndeLltwEXagA==,type:str]
+    hosts:
+        - host: ENC[AES256_GCM,data:G+9Mf3Q5E9Xl/NR73W81/ujpn4bN/sdMdV+tap0=,iv:SLaqTbysUd4Oh33aHlzKLJo4rGHRocjOmz8vKVVo3Z8=,tag:EOCZPqCGNMVLWaBssEJYKQ==,type:str]
+          paths:
+            - path: ENC[AES256_GCM,data:5A==,iv:nm3qT4rMufgg1PKkT+VNWpgt1thnwJILfnaC5Bqk3js=,tag:sawZL2z5hjvWG39tZPb0Cw==,type:str]
+              pathType: ENC[AES256_GCM,data:/rMSArmEwlqxlS7+cEzc+VGp4NsdMg==,iv:GUdDfZO9C0+sa/iRS049Ei5AXu+kngTmS4krtQnAmnk=,tag:wF1/YDRILpMLvBuK8Yc9gA==,type:str]
+    tls:
+        - hosts:
+            - ENC[AES256_GCM,data:pUsmOgBVVlBXaOeCRwvGEDlVgfzNrhMKkaYeplg=,iv:nFyXfdeVUryLDimRyXp40YdzqIBPs7itMUXYHJtl0qk=,tag:w+wWKmEjoW27io6xBnqcuw==,type:str]
+          secretName: ENC[AES256_GCM,data:SkcKSN/1HKuT/2gnD7ZwxSdBS/UUgnXW0Zhs1kErItS91fvuKq3a,iv:hDy+6/zSwgoWJ6/RGvbprhhCO6jk+0MBU8vR6oHrkYI=,tag:LOT2ARJkzbomfELPVahMjw==,type:str]
+service:
+    type: ENC[AES256_GCM,data:fiuPXEfcjW0=,iv:W2TSydc+AtmBlyq/N22n8TCetS9RDuNwhoPIFIlXMGo=,tag:G3yJ8Alw9OvD5GP6s6/gxA==,type:str]
+    nodePort: ENC[AES256_GCM,data:OCBW7ds=,iv:aE9Ti+IOVKB+QvNNbYdlYHOPmd0Bs65WOc2EtWvQYbs=,tag:mE3h4Z1YcY2XoCO4GwIftw==,type:int]
+affinity:
+    podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: ENC[AES256_GCM,data:vXK2,iv:RoOFg5MzmZ2l7ZBK2PyEzKeUfkEfz7HGz4b+89+befc=,tag:+270mon6DsWQuvRpUPSiwg==,type:int]
+              podAffinityTerm:
+                labelSelector:
+                    matchExpressions:
+                        - key: ENC[AES256_GCM,data:Q6BMQ0+nJkic/iObsvqY64N7jwXfYg==,iv:7dKxLfZJNCpDYR8nzxHqLpxOIaV2MSqI4IrHv1sIQcA=,tag:T0Obq2Rt8ji8tID6DIXcpw==,type:str]
+                          operator: ENC[AES256_GCM,data:pis=,iv:5rarch10cqHY1+RnP1ymI3g5YfhJVmKyTsJHCx0SWho=,tag:y4+oq1bmhtST6l0Uo9+VmA==,type:str]
+                          values:
+                            - ENC[AES256_GCM,data:6sQdmcNTE8RN/OXW,iv:tAa7H0yc15827lLqZeBfOzRGfjle7dPRHxtaASYQX40=,tag:dI/SPQb1R66qeJoq2Ie7mg==,type:str]
+                topologyKey: ENC[AES256_GCM,data:UxD6BedDU7IP/lhLN903W4GInBPfVBJ7Pw7F,iv:e8wL2Xnm6SMGqnIdRx2Icwj0wC2WRVQMyQBoGScrw4I=,tag:zrxnhxqMtpw7iRsmqUAusw==,type:str]
+securityContext:
+    runAsNonRoot: ENC[AES256_GCM,data:6VwLXw==,iv:8RHQS3HE8sVN0AFfP3KsSKB8AUWjdAwuN45gOHFpHPk=,tag:ir1GeNGnkFYcegn/2OeFWw==,type:bool]
+    runAsUser: ENC[AES256_GCM,data:E9bp,iv:VR/KrAt+sJLYtFkXQID7B1buRLjpCoLK6ujET+05YCo=,tag:8DkgKKCofnNtvDG8mhscrA==,type:int]
+    allowPrivilegeEscalation: ENC[AES256_GCM,data:mw1HDK0=,iv:RzMZObDIDB9D6ZWRqFnhM5OROBfonqOVg0SzAnfsq/M=,tag:JblImvBXMZ6kATt+dvyUrA==,type:bool]
+    capabilities:
+        drop:
+            - ENC[AES256_GCM,data:136t,iv:BkH9m+oTmogTo52liACVvQiTun48JQvt4xNL+eFnLxM=,tag:rSBQU08YxqNRZm16m3tgFQ==,type:str]
+        add:
+            - ENC[AES256_GCM,data:8mEi4Zq8HVbO,iv:eFLi/J8E8hz6f2BkUZaf7EZJqNkn8zPr0INJbKvaC0s=,tag:sHNfijyTBcNbgH3It6Xcvg==,type:str]
+            - ENC[AES256_GCM,data:R96HS0vKHm8=,iv:JFxbkWieyimvnbKdNXKJybRhP0D702dtUVenYhbf7+M=,tag:+6QOUVuGZ0qhOEpERm9heg==,type:str]
+            - ENC[AES256_GCM,data:KCYQ9yMm,iv:sojBjSf6QvNoq+cmWXR+4EhqZ5Lfu4n9KifGsWbWNQM=,tag:4lek+wabtw65BliZwHhCRQ==,type:str]
+            - ENC[AES256_GCM,data:mD8/wPyn,iv:esf/Ev/qUety+0SnNLVyr8qFbHANSBkkIQJFQlJyB8s=,tag:af37LFZR0Bmsk+oBk6H9lA==,type:str]
+            - ENC[AES256_GCM,data:JV2A9rY=,iv:7LTwvx0tjTqOu0IgIOTlsS+/I32p2Lm+UWn+lsF9slg=,tag:T1vv8/pQQZPpcty0kVjUMg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1cevqpyap8ze94wqhjmsu8dn5ft4f0chzmcv67q86mjwxg8uapstsj4z9vy
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLWStZK2NXWjNqNEl1K1hQ
+            bU4zb2NwRmxYTlQ2dWhDdm1PSmY2Tm1QTFNZClMxeWc3QW93TzFUdmRnMFV1amVz
+            YkM3TGY0WlJZUGdoeWVkYkxWak1DUzAKLS0tIEdiNy9iUnhQT3dleUFOSytlZmN3
+            RFpNL1BYZUNudHhjLytsQk5pRUo2ZGMKY7MNLR9mC6L8uJvWBbO5z7W8fVB6h4o6
+            sHGXLJH2+LkN+3LZuKKifFOnOmNI7hTz/1cp+KZepD60kX+9Ax2Lvg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-09-14T15:21:28Z"
+    mac: ENC[AES256_GCM,data:WlvM0zotLpcqiIIt6oQaYwx+4TS7gTr9JNfPcMDN4zNvO6M6VQflnERj0kkRS9OSrLQIdYxou/vtYf/oCoomBg3/Ez6ueYge8dI8CVxSUWUgYMYeROVq6b7sfcb1nVcCBTByaufP2KLdOLSSnvkdsATAX0xlTAkg3aH11HJ1g54=,iv:wIOZMt2KjqXHavyj5o3f2bJsdSTckbU14/EtQC4+GJg=,tag:RsxWLDcVlcS/RyRL9EI8IA==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.0

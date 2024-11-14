@@ -1,0 +1,6 @@
+spec:
+  source:
+    repoURL: https://kube-vadim.gitlab.yandexcloud.net/kube/kube-project.git
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc

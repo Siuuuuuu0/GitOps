@@ -1,0 +1,114 @@
+grafana:
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
+    annotations:
+      ingress.alb.yc.io/subnets: e2lj3cbk50i7ojks1vjh
+      ingress.alb.yc.io/external-ipv4-address: 89.169.170.120
+      ingress.alb.yc.io/group-name: infra-ingress
+      ingress.alb.yc.io/security-groups: enpbup437ac7a5eiqo4t
+    hosts:
+      - grafana.infra.vadim-website.ru
+    tls:
+      - hosts:
+          - grafana.infra.vadim-website.ru
+        secretName: yc-certmgr-cert-id-fpq7vf753bgk9ofbpj4m
+    additionalDataSources:
+      - name: prometheus-prod
+        type: prometheus
+        url: https://prometheus.apps.yc-courses.ga
+prometheus:
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
+    annotations:
+      ingress.alb.yc.io/subnets: e2lj3cbk50i7ojks1vjh
+      ingress.alb.yc.io/external-ipv4-address: 51.250.18.65
+      ingress.alb.yc.io/group-name: infra-ingress
+      ingress.alb.yc.io/transport-security: tls
+      ingress.alb.yc.io/security-groups: enp1a4thqflv7favcufv
+    hosts:
+      - prometheus.infra.vadim-website.ru
+    tls:
+      - hosts:
+          - prometheus.infra.vadim-website.ru
+        secretName: yc-certmgr-cert-id-fpq7vf753bgk9ofbpj4m
+prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'load-balancer'
+        metrics_path: '/monitoring/v2/prometheusMetrics'
+        scheme: 'https'
+        params:
+          folderId:
+          - '...'
+          service:
+          - 'application-load-balancer'
+        bearer_token: '...'
+        static_configs:
+        - targets: ['monitoring.api.cloud.yandex.net']
+          labels:
+            folderId: '...'
+            service: 'application-load-balancer'
+      - job_name: 'postgres'
+        metrics_path: '/monitoring/v2/prometheusMetrics'
+        scheme: 'https'
+        params:
+          folderId:
+          - '...'
+          service:
+          - 'managed-postgresql'
+        bearer_token: '...'
+        static_configs:
+        - targets: ['monitoring.api.cloud.yandex.net']
+          labels:
+            folderId: '...'
+            service: 'managed-postgresql' 
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+    inhibit_rules:
+      - source_matchers:
+          - 'severity = critical'
+        target_matchers:
+          - 'severity =~ warning|info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'severity = warning'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'alertname = InfoInhibitor'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+    route:
+      group_by: ['namespace']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'telegram'
+      routes:
+      - receiver: 'telegram'
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
+    receivers:
+    - name: 'telegram'
+      telegram_configs:
+      - bot_token: ...
+        chat_id: -4509912105
+        send_resolved: true
+        parse_mode: HTML
+        api_url: "https://api.telegram.org"
+    templates:
+    - '/etc/alertmanager/config/*.tmpl' 
+
+    

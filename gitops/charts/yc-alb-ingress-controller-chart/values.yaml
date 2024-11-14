@@ -1,0 +1,31 @@
+clusterId: ""
+clusterLabelName: yc-k8s-cluster
+daemonsetTolerations: []
+endpoint: api.cloud.yandex.net:443
+folderId: ""
+hcImage:
+  pullPolicy: IfNotPresent
+  repository: cr.yandex/mirror/alpine/socat
+  tag: 1.7.4.2-r0
+hcPort: 10501
+image:
+  pullPolicy: IfNotPresent
+  repository: cr.yandex/yc-marketplace/yandex-cloud/yc-alb-ingress/yc-alb-ingress-controller
+  tag: v0.1.11
+internalRootCaSecretName: ""
+nameOverride: yc-alb-ingress-controller
+podSecurityContext:
+  runAsNonRoot: true
+region: ""
+replicaCount: 1
+saKeySecretKey: ""
+saKeySecretKeyFile: sa-key.json
+saKeySecretName: yc-alb-ingress-controller-sa-key
+securityContext:
+  runAsNonRoot: true
+serviceAccount:
+  annotations: {}
+  automountServiceAccountToken: true
+  create: true
+  name: null
+terminationGracePeriodSeconds: 10

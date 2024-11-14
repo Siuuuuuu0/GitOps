@@ -1,0 +1,21 @@
+apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Endpoint
+metadata:
+  name: prod-source
+spec:
+  forProvider:
+    folderId: b1giktpatd88fk2a7bss
+    name: prod-source
+    settings:
+      - postgresSource:
+        - database: todolist_prod
+          password:
+            - rawSecretRef:
+                name: postgres-prod-creds
+                namespace: infrastructure
+                key: password
+          user: todolist_prod_user
+          connection:
+          - mdbClusterId: c9qdts1t3c8pdth0fctg
+            excludeTables: []
+            includeTables: []

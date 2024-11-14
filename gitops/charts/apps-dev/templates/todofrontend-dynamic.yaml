@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: todoapp-dynamic
+  namespace: argocd
+spec:
+  generators:
+    - scmProvider:
+        cloneProtocol: https
+        filters:
+          - branchMatch: ^feature
+            repositoryMatch: ^todofrontend
+        gitlab:
+          allBranches: true
+          api: "https://kube-vadim.gitlab.yandexcloud.net/"
+          group: kube
+          includeSubgroups: true
+          tokenRef:
+            key: token
+            secretName: my-gitlab-token-secret
+  template:
+    metadata:
+      name: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+    spec:
+      destination:
+        namespace: "{{`{{ repository }}`}}-{{`{{ branch }}`}}"
+        name: {{ .Values.spec.destination.name }}
+      project: todoapp
+      source:
+        path: charts/todofrontend
+        repoURL: "https://kube-vadim.gitlab.yandexcloud.net/kube/todoapp-dynamic.git"
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valueFiles:
+            - secrets+age-import:///helm-secrets-private-keys-apps/key.txt?../../values/todofrontend-dynamic.yaml
+          parameters:
+            - name: "image.tag"
+              value: "{{`{{ branch }}`-`{{ sha }}`}}"
+          # Параметры для настройки ingress
+            - name: "ingress.hosts[0].host"
+              value: "{{`{{ branch }}`}}.todoapp.apps.vadim-website.ru"
+            - name: "ingress.hosts[0].paths[0].path"
+              value: "/"
+            - name: "ingress.hosts[0].paths[0].pathType"
+              value: "ImplementationSpecific"
+            - name: "ingress.tls[0].hosts[0]"
+              value: "{{`{{ branch }}`}}.todoapp.apps.vadim-website.ru"
+            - name: "ingress.tls[0].secretName"
+              value: "yc-certmgr-cert-id-fpqpcgg38hqd9cs1ajr1"
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true

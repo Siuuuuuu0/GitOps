@@ -1,0 +1,36 @@
+clusterSecretStore:
+  name: lockbox
+  authSecret:
+    name: external-secrets-operator
+    key: key.json
+    namespace: default
+
+externalSecrets:
+  - name: postgres-creds
+    refreshInterval: 1h
+    secretStoreRef:
+      name: lockbox
+      kind: ClusterSecretStore
+    target:
+      name: postgres-creds
+    data:
+      - secretKey: DB_PG_NAME
+        remoteRef:
+          key: e6qlmbnq2kr2qsc40oq3
+          property: DB_PG_NAME
+      - secretKey: DB_PG_USER
+        remoteRef:
+          key: e6qlmbnq2kr2qsc40oq3
+          property: DB_PG_USER
+      - secretKey: DB_PG_PASSWORD
+        remoteRef:
+          key: e6qlmbnq2kr2qsc40oq3
+          property: DB_PG_PASSWORD
+      - secretKey: DB_PG_HOST
+        remoteRef:
+          key: e6qlmbnq2kr2qsc40oq3
+          property: DB_PG_HOST
+      - secretKey: DB_PG_PORT
+        remoteRef:
+          key: e6qlmbnq2kr2qsc40oq3
+          property: DB_PG_PORT
